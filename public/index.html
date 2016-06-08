@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        [ng-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body ng-cloak ng-controller="mainController as mc">
+<div flex layout="column">
+    <md-toolbar layout="row" layout-align="center center">
+        <h4>Tree view companies</h4>
+    </md-toolbar>
+    <md-content ng-init="getCompanies()">
+        <div class="container" ng-class="{'hide' : hide }">
+            <md-progress-linear md-mode="query" ng-disabled="!showList[1]"></md-progress-linear>
+            <div class="bottom-block" layout="row" layout-align="center center">
+                <span>Loading application data...</span>
+            </div>
+        </div>
+        <vn-list data="companies"></vn-list>
+    </md-content>
+
+
+
+</div>
+
+<md-button ng-click="crateCompany()" id="dialog" md-ripple-size="partial" class="md-fab md-fab-bottom-right md-primary add-company-btn" >
+    <md-icon md-font-set="material-icons"> add </md-icon>
+</md-button>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/services.js"></script>
+<script src="js/directives.js"></script>
+</body>
+</html>

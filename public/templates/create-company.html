@@ -1,0 +1,44 @@
+<md-dialog>
+    <md-toolbar layout="row" layout-align="center center">
+        <p>Create new company</p>
+    </md-toolbar>
+    <form name="newCompanyForm" class="md-dialog-content" layout="column" ng-submit="createCompany()">
+        <md-input-container>
+            <label>Name of company</label>
+            <input type="text" name="nameCompany" ng-model="com.nameCompany" required md-maxlength="50" minlength="2">
+            <div ng-messages="newCompanyForm.nameCompany.$error" ng-show="newCompanyForm.nameCompany.$dirty">
+                <div ng-message="required"  ng-show="newCompanyForm.nameCompany.$error.required">This is required!</div>
+                <div ng-message="md-maxlength"  ng-show="newCompanyForm.nameCompany.$error['md-maxlength']">That's too long!</div>
+                <div ng-message="minlength" ng-show="newCompanyForm.nameCompany.$error.minlength">That's too short!</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container>
+            <label>Annual earnings</label>
+            <input type="number" name="annualEarnings" ng-model="com.annualEarnings" required >
+            <div ng-messages="newCompanyForm.annualEarnings.$error" ng-show="newCompanyForm.annualEarnings.$dirty">
+                <div ng-message="required"  ng-show="newCompanyForm.annualEarnings.$error.required">This is required!</div>
+            </div>
+        </md-input-container>
+
+        <md-radio-group  ng-model="com.radioTypeCompany">
+            <label>Types of company</label>
+            <md-radio-button  value="mainCompany" ng-value="mainCompany" aria-label="mainCompany" >
+                Main company
+            </md-radio-button>
+            <md-radio-button  value="subsidiaryCompany"  aria-label="subsidiaryCompany">
+                Subsidiary company
+            </md-radio-button>
+        </md-radio-group>
+        <md-input-container ng-if="com.radioTypeCompany == 'subsidiaryCompany'">
+            <md-select ng-model="com.parentCompany" placeholder="Select a state">
+                <md-option value="{{comp._id}}" ng-repeat="comp in companiesList" >{{ comp.name }}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <section layout="row" layout-sm="column" layout-align="center center" layout-wrap class="dialog-buttons-group">
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="newCompanyForm.$invalid">Crate company</md-button>
+            <md-button class="md-raised" ng-click="closeDialog()">Cancel</md-button>
+        </section>
+    </form>
+</md-dialog>

@@ -1,0 +1,20 @@
+<ul>
+    <md-list-item layout="column"  ng-repeat="item in items">
+        <md-whiteframe class="md-whiteframe-2dp" layout="row" layout-align="space-between center" style="width: 100%;">
+            <section layout-margin>
+                {{item.name}}
+            </section>
+            <section class="button-group">
+                <md-button class="md-icon-button" aria-label="Edit" ng-click="editCompany(item._id)">
+                    <md-icon md-font-set="material-icons">  edit  </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Delete" ng-click="deleteCompany(item._id)">
+                    <md-icon md-font-set="material-icons">  delete  </md-icon>
+                </md-button>
+            </section>
+        </md-whiteframe>
+
+        <vn-list data="item.childs" style="width: 100%;"></vn-list>
+    </md-list-item>
+
+</ul>

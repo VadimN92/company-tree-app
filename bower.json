@@ -1,0 +1,17 @@
+{
+  "name": "ElifTech",
+  "description": "test for curse",
+  "main": "",
+  "authors": [
+    "Vadim Nagirniak"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

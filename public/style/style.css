@@ -1,0 +1,9 @@
+.dialog-buttons-group {
+    margin-top: 10px;
+}
+.hide {
+    display: none;
+}
+.add-company-btn {
+    position: fixed !important;
+}
