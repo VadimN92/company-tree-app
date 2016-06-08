@@ -37,7 +37,15 @@
                     }, function error(err) {
                         callback(err);
                     });
-            }
+            },
+            updateCompany: function(data, callback) {
+                $http.post('/api/updateCompany', data)
+                    .then(function success(res) {
+                        callback(res);
+                    }, function error(err) {
+                        callback(err);
+                    });
+        }
         }
     }]);
 })();

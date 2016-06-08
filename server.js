@@ -49,11 +49,6 @@ app.get('/api/getCompanies', function(req, res) {
     list = [];
     Company.find({parent_id: false}, function(err, docs) {
 
-        var parent_count = 0;
-        for(index in docs) {
-            parent_count = index;
-        }
-
         /*var promise = new Promise(function(resolve, reject) {
             for(index in docs) {
                 list.push(docs[index].toObject());
@@ -66,7 +61,6 @@ app.get('/api/getCompanies', function(req, res) {
         for(index in docs) {
             list.push(docs[index].toObject());
             list[index].childs = [];
-            console.log(parent_count);
             buildListCompanies(docs[index], list[index].childs);
         }
 
@@ -86,38 +80,17 @@ app.get('/api/getCompanies', function(req, res) {
 
 function buildListCompanies(parent, childs) {
     Company.find({parent_id: parent._id}, function(err, docs) {
-        /*console.log("*******************");
-        console.log(docs);
-        console.log("*******************");*/
-        //childs.push(docs);
-
-        /*console.log("*******************");
-        console.log(parent.childs, parent);
-        console.log(parent);
-        console.log("*******************");*/
-        var cl_count;
-        for(index in docs) {
-            cl_count = index;
-        }
+        // need add there inspection
         for(index in docs) {
             childs.push(docs[index].toObject());
             childs[index].childs = [];
             buildListCompanies(docs[index], childs[index].childs);
         }
-        /*docs.forEach(function (item, index) {
-            childs.push(item.toObject());
-            childs[index].childs = [];
-            buildListCompanies(item, childs[index].childs);
-        });*/
-
-        /*console.log(list);
-        console.log("*******************");*/
     });
 }
 
 
 app.post('/api/newCompany', function(req, res) {
-    console.log(req.body);
     var parent = false;
     if(req.body.companyType.type == "subsidiaryCompany") {
         parent = req.body.companyType.parentId;
@@ -129,18 +102,58 @@ app.post('/api/newCompany', function(req, res) {
     });
     newCompany.save(function(err) {
         if (err) throw err;
-
-        console.log("Success saving");
         res.send("ok");
     });
 });
 
 app.post("/api/deleteCompany", function(req, res) {
-    console.log("open");
-    console.log(req.body.id);
-    res.json(req.body.id);
+    res.send(deleteCompany(req.body.id));
 });
 
+function deleteCompany(id) {
+    Company.remove({"_id": id}, function(err, docs) {
+        if(err) {
+            return false;
+        } else {
+            Company.find({"parent_id": id}, function(err, docs) {
+                if(err) return false;
+                for (index in docs) {
+                    deleteCompany(docs[index]._id);
+                }
+
+            });
+        }
+        return "ok";
+    });
+}
+
+app.post('/api/getCompaniesListById', function(req, res) {
+    Company.find({}, function (err, docs) {
+        if (err) {
+            res.json({result: false});
+        } else {
+            var comps = {};
+            for (index in docs) {
+
+            }
+        }
+    });
+});
+
+app.post('/api/updateCompany', function(req, res) {
+    var data = req.body;
+    delete data._id;
+    Company.update({_id: req.body.id}, data, { multi: false }, function(err, docs) {
+        if(err) {
+            return false;
+        } else {
+            console.log(docs);
+            res.json({result: true});
+        }
+    });
+    console.log("put");
+    console.log(req.body);
+});
 
 app.listen(config.port, function () {
     console.log("Server run! http://localhost:" + config.port);

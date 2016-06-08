@@ -18,6 +18,11 @@
                 console.log(response);
             });
         }
+        $scope.$on('myCustomEvent', function (event, data) {
+            console.log("data");
+            console.log(data); // Данные, которые нам прислали
+            $scope.getCompanies();
+        });
 
 
         function createCompany() {
@@ -28,16 +33,11 @@
                 scope: $scope,
                 clickOutsideToClose: true,
                 preserveScope: true,
-                controller: function($scope, $mdDialog, companyService){
-                    //$scope.companiesList = [];
+                controller: function($scope, $mdDialog, companyService) {
+                    $scope.companiesList = [];
                     companyService.getListCompaniens(function(response) {
                         /* !!! check errors here !!!*/
-                        console.log('response');
-                        console.log(typeof response.data);
-                        console.log($scope.companiesList);
                         $scope.companiesList = [].concat(response.data);
-                        console.log($scope.companiesList);
-                        console.log(typeof $scope.companiesList);
                     });
                     $scope.createCompany = function() {
                         var data = {

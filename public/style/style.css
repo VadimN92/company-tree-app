@@ -7,3 +7,6 @@
 .add-company-btn {
     position: fixed !important;
 }
+md-input-container {
+    margin: 10px 0;
+}
