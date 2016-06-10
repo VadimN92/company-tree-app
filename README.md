@@ -1,4 +1,8 @@
 # company-tree-app
+
+Steps with can halp you run my project
+
+
 1) Clone the repo<br>
 2) npm install<br>
 3) bower install<br>
